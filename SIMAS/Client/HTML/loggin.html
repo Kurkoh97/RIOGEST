@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIOGEST</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* Login Form */
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 400px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .register-link {
+            text-align: center;
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .register-link:hover {
+            color: #764ba2;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .welcome-title {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .login-container {
+                padding: 2rem;
+            }
+
+            .dashboard {
+                padding: 1rem;
+            }
+
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">RIOGEST</div>
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="showSection('home')">Inicio</button>
+            <button class="nav-btn" onclick="showSection('about')">Acerca de</button>
+            <button class="nav-btn" onclick="showSection('services')">Servicios</button>
+            <button class="nav-btn" onclick="showSection('contact')">Contacto</button>
+        </div>
+        <div class="user-info" id="userInfo" style="display: none;">
+            <div class="user-avatar" id="userAvatar"></div>
+            <span id="userName"></span>
+            <button class="nav-btn" onclick="logout()">Cerrar Sesión</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Login Form -->
+        <div class="login-container" id="loginForm">
+            <h2 class="login-title">Iniciar Sesión</h2>
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <label for="username">Usuario o Email</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">Iniciar Sesión</button>
+                <div class="register-link" onclick="showRegister()">
+                    ¿No tienes cuenta? Regístrate aquí
+                </div>
+            </form>
+        </div>
+
+        <!-- Register Form -->
+       <!----> <div class="login-container hidden" id="registerForm">
+            <h2 class="login-title">Registrarse</h2>
+            <form id="registerFormElement">
+                <div class="form-group">
+                    <label for="regName">Nombre Completo</label>
+                    <input type="text" id="regName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Contraseña</label>
+                    <input type="password" id="regPassword" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">Registrarse</button>
+                <div class="register-link" onclick="showLogin()">
+                    ¿Ya tienes cuenta? Inicia sesión aquí
+                </div>
+            </form>
+        </div>
+
+        <!-- Login Form -->
+        <div class="auth-form" id="login-form" style="display: none;">
+            <h2>Iniciar Sesión</h2>
+            <form onsubmit="login(event)">
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="form-btn">Iniciar Sesión</button>
+            </form>
+            <div class="form-switch">
+                ¿No tienes cuenta? <a href="#" onclick="showRegister()">Regístrate</a>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div class="auth-form" id="register-form" style="display: none;">
+            <h2>Crear Cuenta</h2>
+            <form onsubmit="register(event)">
+                <div class="form-group">
+                    <label for="fullName">Nombre Completo</label>
+                    <input type="text" id="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Correo Electrónico</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Teléfono</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="document">Documento de Identidad</label>
+                    <input type="text" id="document" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Contraseña</label>
+                    <input type="password" id="regPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar Contraseña</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="form-btn">Crear Cuenta</button>
+            </form>
+            <div class="form-switch">
+                ¿Ya tienes cuenta? <a href="#" onclick="showLogin()">Iniciar Sesión</a>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div class="admin-panel" id="admin-panel" style="display: none;">
+            <h2>Panel de Administración</h2>
+            
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">PQRs Activos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">89</div>
+                    <div class="stat-label">Resueltos este mes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">23</div>
+                    <div class="stat-label">Pendientes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1,245</div>
+                    <div class="stat-label">Usuarios registrados</div>
+                </div>
+            </div>
+
+            <div class="admin-actions">
+                <button class="admin-btn" onclick="moderateContent()">Moderar Contenido</button>
+                <button class="admin-btn" onclick="manageUsers()">Gestionar Usuarios</button>
+                <button class="admin-btn" onclick="generateReports()">Generar Reportes</button>
+                <button class="admin-btn" onclick="postNews()">Publicar Noticias</button>
+                <button class="admin-btn danger" onclick="emergencyAlert()">Alerta Emergencia</button>
+            </div>
+
+            <div class="admin-content">
+                <h3>PQRs Pendientes de Revisión</h3>
+                <div class="posts-container">
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="post-avatar">RC</div>
+                            <div class="post-info">
+                                <h4>Roberto Campos</h4>
+                                <div class="post-meta">
+                                    <span>Hace 30 min</span>
+                                    <span class="status-badge status-received">Pendiente</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-category">Medio Ambiente</div>
+                        <div class="post-content">
+                            <p>Hay acumulación de basura en la quebrada del sector norte. Esto puede causar problemas ambientales y de salud pública.</p>
+                        </div>
+                        <div class="admin-actions">
+                            <button class="admin-btn" onclick="approvePost(this)">Aprobar</button>
+                            <button class="admin-btn" onclick="assignPost(this)">Asignar</button>
+                            <button class="admin-btn" onclick="respondPost(this)">Responder</button>
+                            <button class="admin-btn danger" onclick="rejectPost(this)">Rechazar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // App State
+       
+
+        let posts = [];
+        let currentVisibility = 'public';
+        let isLoggedIn = true;
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isLoggedIn) {
+                showMainApp();
+            } else {
+                showLogin();
+            }
+        });
+
+        // Authentication Functions
+        function login(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Simulate login
+            if (email && password) {
+                isLoggedIn = true;
+                if (email === 'admin@ciudad.gov.co') {
+                    currentUser.isAdmin = true;
+                    document.getElementById('admin-nav').style.display = 'block';
+                }
+                showMainApp();
+                showNotification('Sesión iniciada correctamente', 'success');
+            }
+        }
+
+        function register(event) {
+            event.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                showNotification('Las contraseñas no coinciden', 'error');
+                return;
+            }
+            
+            // Simulate registration
+            if (fullName && email && password) {
+                currentUser.name = fullName;
+                currentUser.email = email;
+                isLoggedIn = true;
+                showMainApp();
+                showNotification('Cuenta creada exitosamente. Verifica tu correo.', 'success');
+            }
+        }
+
+        function showLogin() {
+            document.getElementById('main-app').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        function showRegister() {
+            document.getElementById('main-app').style.display = 'none';
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        function showMainApp() {
+            document.getElementById('main-app').style.display = 'grid';
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        // Navigation Functions
+        function showSection(section) {
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show appropriate section
+            switch(section) {
+                case 'feed':
+                    showMainApp();
+                    break;
+                case 'admin':
+                    if (currentUser.isAdmin) {
+                        document.getElementById('main-app').style.display = 'none';
+                        document.getElementById('admin-panel').style.display = 'block';
+                    }
+                    break;
+                case 'my-pqrs':
+                    showMyPQRs();
+                    break;
+                case 'news':
+                    showNews();
+                    break;
+                default:
+                    showMainApp();
+            }
+        }
+
+        // Post Functions
+        function createPost() {
+            const content = document.querySelector('.post-input').value;
+            if (!content.trim()) {
+                showNotification('Escribe el contenido de tu PQR', 'error');
+                return;
+            }
+            
+            const post = {
+                id: Date.now(),
+                author: currentUser.name,
+                avatar: currentUser.avatar,
+                content: content,
+                timestamp: 'Ahora',
+                status: 'received',
+                category: 'General',
+                visibility: currentVisibility,
+                likes: 0,
+                supports: 0,
+                follows: 0,
+                comments: []
+            };
+            
+            posts.unshift(post);
+            document.querySelector('.post-input').value = '';
+            showNotification('PQR publicado exitosamente', 'success');
+            renderPosts();
+        }
+
+        function renderPosts() {
+            const container = document.querySelector('.posts-container');
+            // Posts are already rendered in HTML for demo
+            // In a real app, this would dynamically create post elements
+        }
+
+        function toggleReaction(button, type) {
+            button.classList.toggle('active');
+            const countSpan = button.querySelector('.count');
+            let count = parseInt(countSpan.textContent);
+            
+            if (button.classList.contains('active')) {
+                count++;
+            } else {
+                count--;
+            }
+            
+            countSpan.textContent = count;
+        }
+
+        function toggleComments(button) {
+            const post = button.closest('.post');
+            const commentsSection = post.querySelector('.comments-section');
+            
+            if (commentsSection.style.display === 'none') {
+                commentsSection.style.display = 'block';
+            } else {
+                commentsSection.style.display = 'none';
+            }
+        }
+
+        function sharePost(button) {
+            showNotification('Enlace copiado al portapapeles', 'success');
+        }
+
+        function toggleVisibility(type) {
+            currentVisibility = type;
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Post Creation Options
+        function addImage() {
+            showNotification('Funcionalidad de imagen próximamente', 'info');
+        }
+
+        function addLocation() {
+            showNotification('Funcionalidad de ubicación próximamente', 'info');
+        }
+
+        function addTag() {
+            showNotification('Funcionalidad de etiquetas próximamente', 'info');
+        }
+
+        function selectCategory() {
+            showModal(`
+                <h3>Seleccionar Categoría</h3>
+                <div style="margin-top: 20px;">
+                    <div class="menu-item" onclick="selectCat('Servicios Públicos')">🚰 Servicios Públicos</div>
+                    <div class="menu-item" onclick="selectCat('Vías y Transporte')">🚦 Vías y Transporte</div>
+                    <div class="menu-item" onclick="selectCat('Seguridad')">🔒 Seguridad</div>
+                    <div class="menu-item" onclick="selectCat('Salud')">🏥 Salud</div>
+                    <div class="menu-item" onclick="selectCat('Medio Ambiente')">🌳 Medio Ambiente</div>
+                    <div class="menu-item" onclick="selectCat('Educación')">📚 Educación</div>
+                </div>
+            `);
+        }
+
+        function selectCat(category) {
+            showNotification(`Categoría seleccionada: ${category}`, 'success');
+            closeModal();
+        }
+
+        // Admin Functions
+        function moderateContent() {
+            showNotification('Abriendo panel de moderación', 'info');
+        }
+
+        function manageUsers() {
+            showNotification('Abriendo gestión de usuarios', 'info');
+        }
+
+        function generateReports() {
+            showNotification('Generando reportes estadísticos', 'info');
+        }
+
+        function postNews() {
+            showModal(`
+                <h3>Publicar Noticia Oficial</h3>
+                <div style="margin-top: 20px;">
+                    <textarea placeholder="Contenido de la noticia..." style="width: 100%; height: 100px; margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 10px;"></textarea>
+                    <button class="admin-btn" onclick="publishNews()">Publicar</button>
+                </div>
+            `);
+        }
+
+        function publishNews() {
+            showNotification('Noticia publicada exitosamente', 'success');
+            closeModal();
+        }
+
+        function emergencyAlert() {
+            showModal(`
+                <h3>Alerta de Emergencia</h3>
+                <div style="margin-top: 20px; color: #e74c3c;">
+                    <p>⚠️ Esta función enviará una alerta a todos los usuarios registrados</p>
+                    <textarea placeholder="Mensaje de emergencia..." style="width: 100%; height: 80px; margin: 15px 0; padding: 10px; border: 2px solid #e74c3c; border-radius: 10px;"></textarea>
+                    <button class="admin-btn danger" onclick="sendEmergencyAlert()">Enviar Alerta</button>
+                </div>
+            `);
+        }
+
+        function sendEmergencyAlert() {
+            showNotification('Alerta de emergencia enviada', 'success');
+            closeModal();
+        }
+
+        function approvePost(button) {
+            const post = button.closest('.post');
+            const statusBadge = post.querySelector('.status-badge');
+            statusBadge.textContent = 'Aprobado';
+            statusBadge.className = 'status-badge status-review';
+            showNotification('PQR aprobado', 'success');
+        }
+
+        function assignPost(button) {
+            showModal(`
+                <h3>Asignar PQR</h3>
+                <div style="margin-top: 20px;">
+                    <select style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                        <option>Departamento de Obras Públicas</option>
+                        <option>Departamento de Servicios</option>
+                        <option>Departamento de Seguridad</option>
+                        <option>Departamento de Salud</option>
+                    </select>
+                    <button class="admin-btn" onclick="assignToAdmin()">Asignar</button>
+                </div>
+            `);
+        }
+
+        function assignToAdmin() {
+            showNotification('PQR asignado exitosamente', 'success');
+            closeModal();
+        }
+
+        function respondPost(button) {
+            showModal(`
+                <h3>Responder PQR</h3>
+                <div style="margin-top: 20px;">
+                    <textarea placeholder="Respuesta oficial..." style="width: 100%; height: 120px; margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 10px;"></textarea>
+                    <button class="admin-btn" onclick="sendResponse()">Enviar Respuesta</button>
+                </div>
+            `);
+        }
+
+        function sendResponse() {
+            showNotification('Respuesta enviada exitosamente', 'success');
+            closeModal();
+        }
+
+        function rejectPost(button) {
+            if (confirm('¿Estás seguro de que quieres rechazar este PQR?')) {
+                const post = button.closest('.post');
+                post.style.opacity = '0.5';
+                showNotification('PQR rechazado', 'error');
+            }
+        }
+
+        // Other Functions
+        function showMyPQRs() {
+            showNotification('Mostrando tus PQRs', 'info');
+        }
+
+        function showNews() {
+            showNotification('Mostrando noticias oficiales', 'info');
+        }
+
+        function toggleUserMenu() {
+            showModal(`
+                <h3>Perfil de Usuario</h3>
+                <div style="margin-top: 20px;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(45deg, #FF6B6B, #4ECDC4); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold;">${currentUser.avatar}</div>
+                        <h4>${currentUser.name}</h4>
+                        <p style="color: #666;">${currentUser.email}</p>
+                    </div>
+                    <div class="menu-item" onclick="editProfile()">✏️ Editar Perfil</div>
+                    <div class="menu-item" onclick="changePassword()">🔒 Cambiar Contraseña</div>
+                    <div class="menu-item" onclick="notifications()">🔔 Notificaciones</div>
+                    <div class="menu-item" onclick="logout()">🚪 Cerrar Sesión</div>
+                </div>
+            `);
+        }
+
+        function editProfile() {
+            showNotification('Funcionalidad de edición próximamente', 'info');
+            closeModal();
+        }
+
+        function changePassword() {
+            showNotification('Funcionalidad de cambio de contraseña próximamente', 'info');
+            closeModal();
+        }
+
+        function notifications() {
+            showNotification('Funcionalidad de notificaciones próximamente', 'info');
+            closeModal();
+        }
+
+        function logout() {
+            isLoggedIn = false;
+            currentUser.isAdmin = false;
+            document.getElementById('admin-nav').style.display = 'none';
+            showLogin();
+            closeModal();
+            showNotification('Sesión cerrada', 'info');
+        }
+
+        // Utility Functions
+        function showModal(content) {
+            document.getElementById('modal-body').innerHTML = content;
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 10px;
+                color: white;
+                font-weight: 600;
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            const colors = {
+                success: '#42b883',
+                error: '#e74c3c',
+                info: '#4267B2',
+                warning: '#f39c12'
+            };
+            
+            notification.style.background = colors[type] || colors.info;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Add keyframe animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+    <script>
+        // Simulación de base de datos de usuarios
+        const users = [
+            { username: 'admin', password: 'admin123', name: 'Administrador', email: 'admin@example.com' },
+            { username: 'user', password: 'user123', name: 'Usuario Demo', email: 'user@example.com' },
+            { username: 'demo@test.com', password: 'demo123', name: 'Demo User', email: 'demo@test.com' }
+        ];
+
+        let currentUser = null;
+
+        // Verificar si hay una sesión activa al cargar la página
+        window.addEventListener('load', function() {
+            const savedUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (savedUser) {
+                currentUser = savedUser;
+                showDashboard();
+            }
+        });
+
+        // Función para mostrar el formulario de login
+        function showLogin() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+        }
+
+        // Función para mostrar el formulario de registro
+        function showRegister() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+        }
+
+        // Función para mostrar el dashboard
+        function showDashboard() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            
+            // Mostrar información del usuario en el header
+            document.getElementById('userInfo').style.display = 'flex';
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+        }
+
+        // Función para cerrar sesión
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            document.getElementById('userInfo').style.display = 'none';
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+            
+            // Limpiar formularios
+            document.getElementById('loginFormElement').reset();
+            document.getElementById('registerFormElement').reset();
+        }
+
+        // Función para mostrar secciones (placeholder)
+        function showSection(section) {
+            if (!currentUser) {
+                alert('Por favor, inicia sesión para acceder a esta sección.');
+                return;
+            }
+            
+            // Aquí podrías agregar lógica para mostrar diferentes secciones
+            switch(section) {
+                case 'home':
+                    alert('Sección de Inicio - Funcionalidad próximamente');
+                    break;
+                case 'about':
+                    alert('Sección Acerca de - Funcionalidad próximamente');
+                    break;
+                case 'services':
+                    alert('Sección Servicios - Funcionalidad próximamente');
+                    break;
+                case 'contact':
+                    alert('Sección Contacto - Funcionalidad próximamente');
+                    break;
+            }
+        }
+
+        // Manejar el envío del formulario de login
+        document.getElementById('loginFormElement').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Verificar credenciales
+            const user = users.find(u => 
+                (u.username === username || u.email === username) && u.password === password
+            );
+            
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                showDashboard();
+                
+                // Animación de éxito
+                const loginBtn = document.querySelector('.login-btn');
+                loginBtn.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+                loginBtn.textContent = '¡Iniciando sesión!';
+                
+                setTimeout(() => {
+                    loginBtn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                    loginBtn.textContent = 'Iniciar Sesión';
+                }, 1000);
+            } else {
+                alert('Usuario o contraseña incorrectos');
+                
+                // Animación de error
+                const loginContainer = document.getElementById('loginForm');
+                loginContainer.style.animation = 'shake 0.5s ease-in-out';
+                
+                setTimeout(() => {
+                    loginContainer.style.animation = 'slideIn 0.5s ease-out';
+                }, 500);
+            }
+        });
+
+        // Manejar el envío del formulario de registro
+        document.getElementById('registerFormElement').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            
+            // Verificar si el email ya existe
+            const existingUser = users.find(u => u.email === email);
+            
+            if (existingUser) {
+                alert('Este email ya está registrado. Intenta con otro email.');
+                return;
+            }
+            
+            // Crear nuevo usuario
+            const newUser = {
+                username: email,
+                password: password,
+                name: name,
+                email: email
+            };
+            
+            users.push(newUser);
+            currentUser = newUser;
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            
+            alert('¡Registro exitoso! Bienvenido a nuestra plataforma.');
+            showDashboard();
+        });
+
+        // Agregar animación de shake para errores
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Easter egg: Usuarios predeterminados
+        console.log('Usuarios de prueba disponibles:');
+        console.log('1. Usuario: admin, Contraseña: admin123');
+        console.log('2. Usuario: user, Contraseña: user123');
+        console.log('3. Usuario: demo@test.com, Contraseña: demo123');
+    </script>
+</body>
+</html>

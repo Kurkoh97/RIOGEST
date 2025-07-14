@@ -1,0 +1,9 @@
+def convertir_a_fahrenheit():
+    celsius = float(input("Ingrese la temperatura en grados Celsius: "))
+    fahrenheit = (celsius * 9/5) + 32
+    return fahrenheit
+
+resultado = convertir_a_fahrenheit()
+print(f"La temperatura en Fahrenheit es: {resultado}")
+
+    
